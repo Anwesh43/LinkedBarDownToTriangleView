@@ -144,7 +144,7 @@ class BarDownToTriangleView(ctx : Context) : View(ctx) {
         private var prev : BDTTNode? = null
 
         init {
-
+            addNeighbor()
         }
 
         fun addNeighbor() {
