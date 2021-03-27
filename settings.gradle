@@ -1,0 +1,3 @@
+include ':bardowntotriangleview'
+include ':app'
+rootProject.name = "LinkedBarDownToTriangleView"
