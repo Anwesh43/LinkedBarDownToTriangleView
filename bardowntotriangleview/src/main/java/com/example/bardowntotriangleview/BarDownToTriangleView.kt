@@ -226,4 +226,13 @@ class BarDownToTriangleView(ctx : Context) : View(ctx) {
             }
         }
     }
+
+    companion object {
+
+        fun create(activity : Activity) : BarDownToTriangleView {
+            val view : BarDownToTriangleView = BarDownToTriangleView(activity)
+            activity.setContentView(view)
+            return view
+        }
+    }
 }
