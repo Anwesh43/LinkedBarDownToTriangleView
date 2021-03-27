@@ -68,7 +68,7 @@ fun Canvas.drawBarDownToTriangle(scale : Float, w : Float, h : Float, paint : Pa
     restore()
 }
 
-fun Canvas.drawaBDTTNode(i : Int, scale : Float, paint : Paint) {
+fun Canvas.drawBDTTNode(i : Int, scale : Float, paint : Paint) {
     val w : Float = width.toFloat()
     val h : Float = height.toFloat()
     paint.color = colors[i]
@@ -135,6 +135,47 @@ class BarDownToTriangleView(ctx : Context) : View(ctx) {
             if (animated) {
                 animated = false
             }
+        }
+    }
+
+    data class BDTTNode(var i : Int, val state : State = State()) {
+
+        private var next : BDTTNode? = null
+        private var prev : BDTTNode? = null
+
+        init {
+
+        }
+
+        fun addNeighbor() {
+            if (i < colors.size - 1) {
+                next = BDTTNode(i + 1)
+                next?.prev = this
+            }
+        }
+
+        fun draw(canvas : Canvas, paint : Paint) {
+            canvas.drawBDTTNode(i, state.scale, paint)
+        }
+
+        fun update(cb : (Float) -> Unit) {
+            state.update(cb)
+        }
+
+        fun startUpdating(cb : () -> Unit) {
+            state.startUpdating(cb)
+        }
+
+        fun getNext(dir : Int, cb : () -> Unit) : BDTTNode {
+            var curr : BDTTNode? = prev
+            if (dir == 1) {
+                curr = next
+            }
+            if (curr != null) {
+                return curr
+            }
+            cb()
+            return this
         }
     }
 }
